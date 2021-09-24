@@ -4,23 +4,23 @@ import { useActions } from '../hooks/use-actions';
 import AddCellButton from './add-cell-button';
 
 interface AddCellProps {
-  nextCellId: string | null;
+  previousCellId: string | null;
   forceVisible?: boolean;
 }
 
-const AddCell: React.FC<AddCellProps> = ({ nextCellId, forceVisible }) => {
-  const { insertCellBefore } = useActions();
+const AddCell: React.FC<AddCellProps> = ({ previousCellId, forceVisible }) => {
+  const { insertCellAfter } = useActions();
 
   return (
     <div className={`add-cell ${forceVisible ? 'force-visible' : ''}`}>
       <div className="add-buttons">
         <AddCellButton
           text="Code"
-          onClick={() => insertCellBefore(nextCellId, 'code')}
+          onClick={() => insertCellAfter(previousCellId, 'code')}
         />
         <AddCellButton
           text="Text"
-          onClick={() => insertCellBefore(nextCellId, 'text')}
+          onClick={() => insertCellAfter(previousCellId, 'text')}
         />
       </div>
       <div className="divider" />

@@ -1,3 +1,4 @@
+import './code-cell.css';
 import React, { useEffect } from 'react';
 import CodeEditor from './code-editor';
 import Preview from './preview';
@@ -12,19 +13,54 @@ interface CodeCellProps {
 
 const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
   const { updateCell, createBundle } = useActions();
-  const bundle = useTypedSelector(({ bundles }) => {
-    return bundles[cell.id];
+  const bundle = useTypedSelector(({ bundles }) => bundles[cell.id]);
+  const cumulativeCode = useTypedSelector(({ cells }) => {
+    const { data, order } = cells;
+    const orderedCells = order.map((id) => data[id]);
+
+    const cumulativeCode = [];
+    for (let orderedCell of orderedCells) {
+      if (orderedCell.type === 'code') {
+        cumulativeCode.push(orderedCell.content);
+      }
+
+      if (orderedCell.id === cell.id) {
+        break;
+      }
+    }
+
+    return cumulativeCode;
   });
 
   useEffect(() => {
+    if (!bundle) {
+      createBundle(cell.id, cumulativeCode.join('\n'));
+      return;
+    }
+
     const timer = setTimeout(async () => {
-      createBundle(cell.id, cell.content);
+      createBundle(cell.id, cumulativeCode.join('\n'));
     }, 750);
 
     return () => {
       clearTimeout(timer);
     };
-  }, [cell.id, cell.content, createBundle]);
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cell.id, cumulativeCode.join('\n'), createBundle]);
+
+  const renderPreview = () => {
+    if (!bundle || bundle.loading) {
+      return (
+        <div className="progress-cover">
+          <progress className="progress is-small is-primary" max="100">
+            Loading
+          </progress>
+        </div>
+      );
+    }
+
+    return <Preview code={bundle.code} errorMessage={bundle.err} />;
+  };
 
   return (
     <Resizable direction="vertical">
@@ -35,7 +71,7 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
             onChange={(value) => updateCell(cell.id, value)}
           />
         </Resizable>
-        {bundle && <Preview code={bundle.code} errorMessage={bundle.err} />}
+        <div className="progress-wrapper">{renderPreview()}</div>
       </div>
     </Resizable>
   );

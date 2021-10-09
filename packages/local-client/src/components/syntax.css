@@ -136,3 +136,19 @@
 .editor-wrapper .JsxText {
     color: #0c141f;
 }
+
+.text-editor .w-md-editor-text-pre .url {
+    color: darkseagreen;
+}
+
+.text-editor .w-md-editor-text-pre .url .content {
+    color: forestgreen;
+}
+
+.text-editor .wmde-markdown p {
+    margin-bottom: 3px;
+}
+
+.text-editor .wmde-markdown a {
+    color: green;
+}

@@ -1,6 +1,7 @@
 import express from 'express';
 import fs from 'fs/promises';
 import path from 'path';
+import { startupContent } from '../data';
 
 interface Cell {
   id: string;
@@ -20,8 +21,13 @@ export const createCellsRouter = (filename: string, dir: string) => {
       res.send(JSON.parse(result));
     } catch (err: any) {
       if (err.code === 'ENOENT') {
-        await fs.writeFile(fullPath, '[]', 'utf-8');
-        res.send([]);
+        if (filename === 'codesheet.js') {
+          await fs.writeFile(fullPath, JSON.stringify(startupContent), 'utf-8');
+          res.send(startupContent);
+        } else {
+          await fs.writeFile(fullPath, '[]', 'utf-8');
+          res.send([]);
+        }
       } else {
         throw err;
       }

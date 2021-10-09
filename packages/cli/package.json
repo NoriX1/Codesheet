@@ -1,6 +1,6 @@
 {
   "name": "codesheet",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Simple web application for js code editing",
   "bin": "dist/index.js",
   "publishConfig": {
@@ -19,10 +19,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@codesheet/client": "^1.0.1"
+    "@codesheet/client": "^1.0.2"
   },
   "devDependencies": {
-    "@codesheet/server": "^1.0.1",
+    "@codesheet/server": "^1.0.2",
     "@types/node": "^16.10.2",
     "commander": "^8.2.0",
     "esbuild": "0.8.26",

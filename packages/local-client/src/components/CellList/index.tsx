@@ -1,9 +1,9 @@
-import './cell-list.css';
+import './styles.css';
 import React, { useEffect } from 'react';
-import { useTypedSelector } from '../hooks/use-typed-selector';
-import CellListItem from './cell-list-item';
-import AddCell from './add-cell';
-import { useActions } from '../hooks/use-actions';
+import { useTypedSelector } from '../../hooks/use-typed-selector';
+import CellListItem from '../CellListItem';
+import AddCell from '../AddCell';
+import { useActions } from '../../hooks/use-actions';
 
 const CellList: React.FC = () => {
   const cells = useTypedSelector(({ cells: { order, data } }) =>

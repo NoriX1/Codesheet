@@ -1,7 +1,7 @@
-import './action-bar.css';
+import './styles.css';
 import React from 'react';
-import { useActions } from '../hooks/use-actions';
-import SmallActionButton from './small-action-button';
+import { useActions } from '../../hooks/use-actions';
+import SmallActionButton from '../SmallActionButton';
 
 interface ActionBarProps {
   id: string;
